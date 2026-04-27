@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: nexio-backend
+    runtime: python
+    region: frankfurt          # closest to EU; change to oregon/ohio for US
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: bash backend/start_prod.sh
+    healthCheckPath: /health
+    envVars:
+      # Required – set these in Render's dashboard or copy from your Replit secrets
+      - key: DATABASE_URL
+        sync: false            # Render will prompt you to fill this in
+      - key: SESSION_SECRET
+        sync: false
+      - key: REPL_ID
+        sync: false            # Your Replit app ID (used as OAuth client_id)
+      # Optional – fill in once you know your deployed URLs
+      - key: BACKEND_URL
+        sync: false            # e.g. https://nexio-backend.onrender.com
+      - key: FRONTEND_URL
+        sync: false            # e.g. https://nexio.vercel.app
